@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ApiError, type FundingOrder, type FundingState } from "@/lib/puente-api";
-import logo from "@assets/generated_images/puente-logo-mark.png";
+const logo = "/favicon.svg";
 import "./chat.css";
 
 // ---------------------------------------------------------------------------

@@ -4,7 +4,7 @@ import { Check, Globe2, Loader2, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { api, money, type Config, type Task } from "@/lib/puente-api";
-import logo from "@assets/generated_images/puente-logo-mark.png";
+const logo = "/favicon.svg";
 import "./chat.css";
 const PollarTools = lazy(() => import("@/components/pollar-tools"));
 export default function Reviewer() {

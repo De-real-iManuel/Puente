@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   ArrowUp,
   ArrowUpRight,
@@ -31,7 +31,7 @@ import {
   type Conversation,
 } from "@/lib/puente-api";
 
-import logo from "@assets/generated_images/puente-logo-mark.png";
+const logo = "/favicon.svg";
 import NigerianFundingCard from "@/components/nigerian-funding-card";
 import { TestnetBadge } from "@/components/testnet-badge";
 import "./chat.css";

@@ -37,3 +37,5 @@ CODING_AGENT_PROMPTS.md
 
 # Misc
 *.patch
+
+.vercel
