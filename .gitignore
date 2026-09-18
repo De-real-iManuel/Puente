@@ -1,0 +1,39 @@
+node_modules/
+dist/
+.cache/
+.local/
+.data/
+.env
+.env.*
+!.env.example
+*.env
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*credentials*.json
+*service-account*.json
+*.tsbuildinfo
+*.log
+coverage/
+test-results/
+playwright-report/
+.DS_Store
+Thumbs.db
+
+# Platform / IDE specific
+.replit-artifact/
+.replit
+replit.md
+replit.nix
+.kiro/
+attached_assets/
+
+# Agent / AI tool artifacts
+.agents/
+.conversation/
+CODING_AGENT_PROMPTS.md
+
+# Misc
+*.patch

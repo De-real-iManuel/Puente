@@ -1,0 +1,31 @@
+﻿{
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "node scripts/ensure-pnpm.mjs",
+    "build": "pnpm run typecheck && pnpm -r --if-present run build",
+    "typecheck:libs": "tsc --build",
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
+    "dev": "node scripts/dev.mjs",
+    "build:puente": "pnpm --filter @workspace/puente build && pnpm --filter @workspace/api-server build",
+    "start": "node artifacts/api-server/dist/index.mjs",
+    "test:puente": "node --test tests/*.test.mjs tests/properties/*.test.mjs tests/integration/*.test.mjs",
+    "check:secrets": "node scripts/check-secrets.mjs"
+  },
+  "private": true,
+  "dependencies": {
+    "@replit/connectors-sdk": "^0.4.3"
+  },
+  "devDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "4.63.1",
+    "fast-check": "^4.10.1",
+    "prettier": "^3.9.6",
+    "typescript": "~5.9.3"
+  },
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=22"
+  }
+}
+
