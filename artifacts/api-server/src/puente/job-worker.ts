@@ -4,7 +4,7 @@
 import { eq, and, lte, sql } from "drizzle-orm";
 import type { db as _dbInstance } from "@workspace/db";
 import { restore } from "./budget-service";
-import { UnsupportedStellarX402Adapter } from "./integrations";
+import { UnsupportedStellarX402Adapter, StellarX402Adapter } from "./integrations";
 import type { X402Port } from "./integrations";
 import { logger } from "../lib/logger";
 
@@ -21,9 +21,9 @@ function getDb(): typeof import("@workspace/db") {
   return _dbMod;
 }
 
-// Module-level x402 adapter instance — cast to interface type so TS uses the
-// interface's return types rather than Promise<never> from the concrete class.
-const x402Adapter: X402Port = new UnsupportedStellarX402Adapter();
+// Module-level x402 adapter instance — uses StellarX402Adapter when env vars
+// are present, falls back to UnsupportedStellarX402Adapter (throws/503) otherwise.
+const x402Adapter: X402Port = StellarX402Adapter.getInstance();
 
 const POLL_INTERVAL_MS = 10_000;
 const LEASE_DURATION_MS = 60_000;

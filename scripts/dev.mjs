@@ -1,8 +1,23 @@
 import { spawn } from "node:child_process";
+import { loadEnvFile } from "node:process";
+
+try {
+  loadEnvFile(".env");
+} catch (error) {
+  if (error?.code !== "ENOENT") throw error;
+}
+
 const manager = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 const children = [];
 function run(args) {
-  const p = spawn(manager, args, { stdio: "inherit", env: process.env });
+  // Newer Node releases cannot always spawn .cmd wrappers directly on Windows.
+  const command = process.platform === "win32" ? process.env.ComSpec : manager;
+  const commandArgs =
+    process.platform === "win32" ? ["/d", "/s", "/c", manager, ...args] : args;
+  const p = spawn(command, commandArgs, {
+    stdio: "inherit",
+    env: { ...process.env, NODE_ENV: "development" },
+  });
   children.push(p);
   return p;
 }

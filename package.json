@@ -9,7 +9,7 @@
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
     "dev": "node scripts/dev.mjs",
     "build:puente": "pnpm --filter @workspace/puente build && pnpm --filter @workspace/api-server build",
-    "start": "node artifacts/api-server/dist/index.mjs",
+    "start": "node --env-file-if-exists=.env artifacts/api-server/dist/index.mjs",
     "test:puente": "node --test tests/*.test.mjs tests/properties/*.test.mjs tests/integration/*.test.mjs",
     "check:secrets": "node scripts/check-secrets.mjs"
   },
