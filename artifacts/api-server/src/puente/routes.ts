@@ -98,7 +98,10 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     const origin = req.headers.origin;
     if (origin) {
       try {
-        if (new URL(origin).host !== req.headers.host) {
+        if (
+          new URL(origin).host !== req.headers.host &&
+          origin !== "https://puente-tau.vercel.app"
+        ) {
           problem(res, 403, "Please use Puente from its own website.");
           return;
         }
