@@ -14,7 +14,7 @@ import {
   type Session,
   type Task,
 } from "./store";
-import { answer } from "./model";
+import { answer, modelConfigured } from "./model";
 
 const router = Router();
 const store = new Store(process.env.DATA_DIR || ".data");
@@ -22,7 +22,6 @@ store.prune();
 setInterval(() => store.prune(), 60000).unref();
 const locks = new Set<string>();
 const rates = new Map<string, { count: number; until: number }>();
-const modelConfigured = () => Boolean(process.env.OPENAI_API_KEY && process.env.OPENAI_MODEL);
 function problem(res: Response, code: number, message: string) {
   return res.status(code).json({ error: message });
 }
@@ -134,7 +133,7 @@ router.post("/session", (req, res) => {
       return problem(
         res,
         503,
-        "The owner must configure a private access code before enabling live chat.",
+        "Set the private access code APP_ACCESS_CODE to at least 16 characters in this Render service, then redeploy.",
       );
     if (
       !sameSecret(

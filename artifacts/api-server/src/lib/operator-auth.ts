@@ -15,7 +15,7 @@ export function requireOperator(
   // If no secret is configured or it is too short, deny all operator access.
   // OPERATOR_SECRET must be at least 32 characters.
   if (!expectedSecret || expectedSecret.length < 32) {
-    res.status(403).end();
+    res.status(503).json({ error: "Set OPERATOR_SECRET to at least 32 characters in this Render service, then redeploy." });
     return;
   }
 
