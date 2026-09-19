@@ -94,7 +94,7 @@ async function operatorFetch<T>(
   secret: string,
   body?: unknown,
 ): Promise<T> {
-  const r = await fetch(`/api/puente${path}`, {
+  const r = await fetch(`/api${path}`, {
     method: body === undefined ? "GET" : "POST",
     credentials: "same-origin",
     headers: {
