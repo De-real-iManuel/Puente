@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Copy workspace manifests and lockfile first for layer caching
 COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
-COPY .npmrc ./ 2>/dev/null || true
+COPY .npmrc ./
 
 # Copy every package.json so pnpm can hoist correctly before source arrives
 COPY artifacts/api-server/package.json ./artifacts/api-server/
@@ -18,7 +18,7 @@ COPY lib/db/package.json               ./lib/db/
 COPY lib/api-client-react/package.json ./lib/api-client-react/
 COPY lib/api-spec/package.json         ./lib/api-spec/
 COPY lib/api-zod/package.json          ./lib/api-zod/
-COPY scripts/package.json              ./scripts/
+COPY scripts/package.json scripts/ensure-pnpm.mjs ./scripts/
 
 # Install all dependencies (frozen)
 RUN pnpm install --frozen-lockfile
@@ -39,10 +39,10 @@ COPY --from=builder /app/artifacts/api-server/dist ./artifacts/api-server/dist
 COPY --from=builder /app/artifacts/puente/dist/public ./artifacts/puente/dist/public
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/artifacts/api-server/node_modules ./artifacts/api-server/node_modules
-COPY --from=builder /app/lib/db/node_modules ./lib/db/node_modules 2>/dev/null || true
+COPY --from=builder /app/lib/db/node_modules ./lib/db/node_modules
 COPY --from=builder /app/lib/db/src ./lib/db/src
 COPY --from=builder /app/lib/db/package.json ./lib/db/
-COPY --from=builder /app/lib/api-zod/src ./lib/api-zod/src 2>/dev/null || true
+COPY --from=builder /app/lib/api-zod/src ./lib/api-zod/src
 COPY --from=builder /app/lib/api-zod/package.json ./lib/api-zod/
 COPY --from=builder /app/package.json ./
 
