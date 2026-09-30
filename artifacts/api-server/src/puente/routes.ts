@@ -14,7 +14,7 @@ import {
   type Session,
   type Task,
 } from "./store";
-import { answer } from "./model";
+import { answer, modelConfigured } from "./model";
 
 const router = Router();
 const store = new Store(process.env.DATA_DIR || ".data");
@@ -22,7 +22,6 @@ store.prune();
 setInterval(() => store.prune(), 60000).unref();
 const locks = new Set<string>();
 const rates = new Map<string, { count: number; until: number }>();
-const modelConfigured = () => Boolean(process.env.OPENAI_API_KEY && process.env.OPENAI_MODEL);
 function problem(res: Response, code: number, message: string) {
   return res.status(code).json({ error: message });
 }
@@ -98,7 +97,10 @@ router.use((req: Request, res: Response, next: NextFunction) => {
     const origin = req.headers.origin;
     if (origin) {
       try {
-        if (new URL(origin).host !== req.headers.host) {
+        if (
+          new URL(origin).host !== req.headers.host &&
+          origin !== "https://puente-tau.vercel.app"
+        ) {
           problem(res, 403, "Please use Puente from its own website.");
           return;
         }
@@ -131,7 +133,7 @@ router.post("/session", (req, res) => {
       return problem(
         res,
         503,
-        "The owner must configure a private access code before enabling live chat.",
+        "Set the private access code APP_ACCESS_CODE to at least 16 characters in this Render service, then redeploy.",
       );
     if (
       !sameSecret(

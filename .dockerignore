@@ -1,0 +1,13 @@
+# Keep local dependencies and build output out of the image context.
+.git
+**/node_modules
+**/dist
+.vercel
+
+# Runtime data and credentials belong in hosting settings or a mounted disk.
+**/.env
+**/.env.*
+**/.data
+**/*.log
+**/*.pem
+**/*.key
